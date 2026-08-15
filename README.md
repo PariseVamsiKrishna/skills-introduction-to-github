@@ -1,47 +1,133 @@
-# Introduction to GitHub
+# Full-Stack Task Management Application
 
-_Get started using GitHub in less than an hour._
+A learning-focused full-stack task manager where users can register/login and manage personal tasks.
 
-## Welcome
+## Features
 
-People use GitHub to build some of the most advanced technologies in the world. Whether you’re visualizing data or building a new game, there’s a whole community and set of tools on GitHub that can help you do it even better. GitHub Skills’ “Introduction to GitHub” exercise guides you through everything you need to start contributing in less than an hour.
+- User registration and login with JWT-based authentication
+- Secure password hashing with bcrypt
+- Task CRUD operations (create, read, update, delete)
+- Mark tasks as completed/active
+- Task filtering (All, Active, Completed)
+- Per-user task isolation (users only access their own tasks)
+- Responsive React UI with plain CSS
+- Basic backend API tests for auth and task flows
 
-- **Who is this for**: New developers, new GitHub users, and students.
-- **What you'll learn**: We'll introduce repositories, branches, commits, and pull requests.
-- **What you'll build**: We'll make a short Markdown file you can use as your [profile README](https://docs.github.com/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/managing-your-profile-readme).
-- **Prerequisites**: None. This exercise is a great introduction for your first day on GitHub.
-- **How long**: This exercise takes less than one hour to complete.
+## Technologies Used
 
-In this exercise, you will:
+### Frontend
+- React (Vite)
+- Plain CSS
 
-1. Create a branch
-2. Commit a file
-3. Open a pull request
-4. Merge your pull request
+### Backend
+- Node.js
+- Express
+- JWT (`jsonwebtoken`)
+- bcrypt (`bcryptjs`)
 
-### How to start this exercise
+### Database
+- MongoDB
+- Mongoose
 
-Simply copy the exercise to your account, then give your favorite Octocat (Mona) **about 20 seconds** to prepare the first lesson, then **refresh the page**.
+### Testing
+- Jest
+- Supertest
+- mongodb-memory-server
 
-[![](https://img.shields.io/badge/Copy%20Exercise-%E2%86%92-1f883d?style=for-the-badge&logo=github&labelColor=197935)](https://github.com/new?template_owner=skills&template_name=introduction-to-github&owner=%40me&name=skills-introduction-to-github&description=Exercise:+Introduction+to+GitHub&visibility=public)
+## Folder Structure
 
-<details>
-<summary>Having trouble? 🤷</summary><br/>
+```text
+.
+├── backend/
+│   ├── src/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── utils/
+│   │   ├── app.js
+│   │   └── server.js
+│   ├── tests/
+│   ├── .env.example
+│   └── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── services/
+│   │   ├── App.jsx
+│   │   └── App.css
+│   ├── .env.example
+│   └── package.json
+└── README.md
+```
 
-When copying the exercise, we recommend the following settings:
+## Installation
 
-- For owner, choose your personal account or an organization to host the repository.
+### 1) Install dependencies
 
-- We recommend creating a public repository, since private repositories will use Actions minutes.
+```bash
+cd backend && npm install
+cd ../frontend && npm install
+```
 
-If the exercise isn't ready in 20 seconds, please check the [Actions](../../actions) tab.
+## Environment Variables
 
-- Check to see if a job is running. Sometimes it simply takes a bit longer.
+### Backend (`backend/.env`)
 
-- If the page shows a failed job, please submit an issue. Nice, you found a bug! 🐛
+Copy `backend/.env.example` to `backend/.env` and configure:
 
-</details>
+```env
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/task-manager
+JWT_SECRET=replace-with-a-strong-secret
+CLIENT_URL=http://localhost:5173
+```
 
----
+### Frontend (`frontend/.env`)
 
-&copy; 2026 GitHub &bull; [Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/code_of_conduct.md) &bull; [MIT License](https://gh.io/mit)
+Copy `frontend/.env.example` to `frontend/.env`:
+
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+## Run Locally
+
+### Start backend
+
+```bash
+cd backend
+npm run dev
+```
+
+### Start frontend
+
+```bash
+cd frontend
+npm run dev
+```
+
+Frontend default URL: `http://localhost:5173`  
+Backend default URL: `http://localhost:5000`
+
+## API Endpoints
+
+### Auth
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+
+### Tasks (authenticated)
+- `GET /api/tasks`
+- `POST /api/tasks`
+- `PUT /api/tasks/:id`
+- `DELETE /api/tasks/:id`
+
+## Testing
+
+Run backend API tests:
+
+```bash
+cd backend
+npm test
+```
