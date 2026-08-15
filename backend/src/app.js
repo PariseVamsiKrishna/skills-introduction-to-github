@@ -3,18 +3,20 @@ const cors = require('cors');
 
 const authRoutes = require('./routes/authRoutes');
 const taskRoutes = require('./routes/taskRoutes');
+const { authRateLimiter, apiRateLimiter } = require('./middleware/rateLimiter');
 
 const app = express();
+const allowedOrigin = process.env.CLIENT_URL || 'http://localhost:5173';
 
-app.use(cors({ origin: process.env.CLIENT_URL || '*' }));
+app.use(cors({ origin: allowedOrigin }));
 app.use(express.json());
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-app.use('/api/auth', authRoutes);
-app.use('/api/tasks', taskRoutes);
+app.use('/api/auth', authRateLimiter, authRoutes);
+app.use('/api/tasks', apiRateLimiter, taskRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' });
